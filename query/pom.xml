@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ec.gob.seps</groupId>
-	<artifactId>query</artifactId>
+	<artifactId>cmn-query-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -37,6 +37,7 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.0</version>
 		</dependency>
+		
 		<!-- commons-beanutils -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>

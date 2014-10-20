@@ -69,6 +69,7 @@ public final class SelectEntity implements Select {
 					join = FetchEntityLazy.join(from).getFrom((AttributeJoin<AttributeOneValue>) fieldObjectJoin);
 					
 					final AttributeOneValue attributeOneValue = (AttributeOneValue) fieldObjectJoin.getAttribute();
+			
 					
 					if (attributeOneValue.getValue() instanceof Collection) {
 						

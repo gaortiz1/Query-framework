@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ec.gob.seps.query.criteria.TestEqual
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.553 sec - in ec.gob.seps.query.criteria.TestEqual
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.354 sec - in ec.gob.seps.query.criteria.TestEqual

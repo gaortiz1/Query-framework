@@ -1,147 +1,152 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ec.gob.seps.query.criteria.delete.entidad;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-/**
- *
- * @author eron
- */
 @Entity
-@Table(name = "HAL_CATALOGO", schema = "HAL")
-@NamedQueries({
-    @NamedQuery(name = "Catalogo.findAll", query = "SELECT h FROM Catalogo h"),
-    @NamedQuery(name = "Catalogo.buscarPorGrupoCatalogo", query = "select o from Catalogo o where o.codGrupoCatalogo.codGrupoCatalogo = :codigoGrupoCatalogo")})
+@Table(name="TIT_CATALOGO")
+@NamedQuery(name="Catalogo.findAll", query="SELECT c FROM Catalogo c")
 public class Catalogo extends BaseEntidad implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "COD_CATALOGO")
-    private Long codCatalogoHallazgo;
-    
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "NOM_CATALOGO")
-    private String nomCatalogo;
-    
-    @NotNull
-    @Size(max = 10)
-    @Column(name = "NOM_NEMONICO")
-    private String nomNemonico;
-    
-    @JoinColumn(name = "COD_GRUPO_CATALOGO", referencedColumnName = "COD_GRUPO_CATALOGO")
-    @ManyToOne
-    private GrupoCatalogo codGrupoCatalogo;
-    
-    @OneToMany(mappedBy = "codPadreCatalogo")
-    private List<Catalogo> catalogoPadreList;
-    
-    @JoinColumn(name = "COD_PADRE_CATALOGO", referencedColumnName = "COD_CATALOGO")
-    @ManyToOne
-    private Catalogo codPadreCatalogo;
 
-    public Catalogo() {
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name="COD_CATALOGO")
+	private Long codigo;
 
-    public Catalogo(Long codCatalogoHallazgo) {
-        this.codCatalogoHallazgo = codCatalogoHallazgo;
-    }
-    
-    public Catalogo(Long codCatalogoHallazgo, String nomCatalogo) {
-        this.codCatalogoHallazgo = codCatalogoHallazgo;
-        this.nomCatalogo = nomCatalogo;
-    }
+	@Column(name="NOM_CATALOGO")
+	private String nombre;
 
-    public Long getCodCatalogoHallazgo() {
-		return codCatalogoHallazgo;
+	@Column(name="NOM_NEMONICO")
+	private String nemonico;
+
+	@Column(name="NUM_NIVEL")
+	private BigDecimal nivel;
+
+	@Column(name="NUM_ORDEN")
+	private BigDecimal orden;
+
+	//bi-directional many-to-one association to Catalogo
+	@ManyToOne
+	@JoinColumn(name="COD_CATALOGO_PADRE")
+	private Catalogo catalogoPadre;
+
+	//bi-directional many-to-one association to GrupoCatalogo
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="COD_GRP_CATALOGO")
+	private GrupoCatalogo grupoCatalogo;
+
+	public Catalogo() {
 	}
 
-	public void setCodCatalogoHallazgo(Long codCatalogoHallazgo) {
-		this.codCatalogoHallazgo = codCatalogoHallazgo;
+	/**
+	 * @return the codigo
+	 */
+	public Long getCodigo() {
+		return codigo;
 	}
 
-	public String getNomCatalogo() {
-		return nomCatalogo;
+	/**
+	 * @param codigo the codigo to set
+	 */
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
-	public void setNomCatalogo(String nomCatalogo) {
-		this.nomCatalogo = nomCatalogo;
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
 	}
 
-	public String getNomNemonico() {
-		return nomNemonico;
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public void setNomNemonico(String nomNemonico) {
-		this.nomNemonico = nomNemonico;
+	/**
+	 * @return the nemonico
+	 */
+	public String getNemonico() {
+		return nemonico;
 	}
 
-	public GrupoCatalogo getCodGrupoCatalogo() {
-		return codGrupoCatalogo;
+	/**
+	 * @param nemonico the nemonico to set
+	 */
+	public void setNemonico(String nemonico) {
+		this.nemonico = nemonico;
 	}
 
-	public void setCodGrupoCatalogo(GrupoCatalogo codGrupoCatalogo) {
-		this.codGrupoCatalogo = codGrupoCatalogo;
+	/**
+	 * @return the nivel
+	 */
+	public BigDecimal getNivel() {
+		return nivel;
 	}
 
-	public List<Catalogo> getCatalogoPadreList() {
-		return catalogoPadreList;
+	/**
+	 * @param nivel the nivel to set
+	 */
+	public void setNivel(BigDecimal nivel) {
+		this.nivel = nivel;
 	}
 
-	public void setCatalogoPadreList(List<Catalogo> catalogoPadreList) {
-		this.catalogoPadreList = catalogoPadreList;
+	/**
+	 * @return the orden
+	 */
+	public BigDecimal getOrden() {
+		return orden;
 	}
 
-	public Catalogo getCodPadreCatalogo() {
-		return codPadreCatalogo;
+	/**
+	 * @param orden the orden to set
+	 */
+	public void setOrden(BigDecimal orden) {
+		this.orden = orden;
 	}
 
-	public void setCodPadreCatalogo(Catalogo codPadreCatalogo) {
-		this.codPadreCatalogo = codPadreCatalogo;
+	/**
+	 * @return the catalogoPadre
+	 */
+	public Catalogo getCatalogoPadre() {
+		return catalogoPadre;
 	}
 
-	@Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codCatalogoHallazgo != null ? codCatalogoHallazgo.hashCode() : 0);
-        return hash;
-    }
+	/**
+	 * @param catalogoPadre the catalogoPadre to set
+	 */
+	public void setCatalogoPadre(Catalogo catalogoPadre) {
+		this.catalogoPadre = catalogoPadre;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Catalogo)) {
-            return false;
-        }
-        Catalogo other = (Catalogo) object;
-        if ((this.codCatalogoHallazgo == null && other.codCatalogoHallazgo != null) || (this.codCatalogoHallazgo != null && !this.codCatalogoHallazgo.equals(other.codCatalogoHallazgo))) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * @return the grupoCatalogo
+	 */
+	public GrupoCatalogo getGrupoCatalogo() {
+		return grupoCatalogo;
+	}
 
-    @Override
-    public String toString() {
-        return "test.model.Catalogo[ codCatalogoHallazgo=" + codCatalogoHallazgo + " ]";
-    }
-    
+	/**
+	 * @param grupoCatalogo the grupoCatalogo to set
+	 */
+	public void setGrupoCatalogo(GrupoCatalogo grupoCatalogo) {
+		this.grupoCatalogo = grupoCatalogo;
+	}
+
 }

@@ -30,7 +30,7 @@ public class BaseEntidad implements Serializable{
 	@NotNull
 	@Size(min = 1, max = 10)
     @Column(name = "STS_ESTADO")
-    private String estado;
+    private String estado ;//= EstadoRegistroEnum.ESTADO_ACTIVO.getEstado();
     
 	@Column(name = "FEC_FECHA_CRC")
     @Temporal(TemporalType.TIMESTAMP)
