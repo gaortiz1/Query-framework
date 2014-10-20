@@ -19,6 +19,7 @@ import ec.gob.seps.query.criteria.build.BuilderWrapperPredicable;
 import ec.gob.seps.query.criteria.entity.attribute.basic.AttributeOneValue;
 import ec.gob.seps.query.criteria.entity.attribute.decorator.AttributeJoin;
 import ec.gob.seps.query.criteria.from.fetch.impl.FetchEntityLazy;
+import ec.gob.seps.query.criteria.operador.logico.impl.And;
 import ec.gob.seps.query.criteria.read.entity.ReadEntity;
 import ec.gob.seps.query.criteria.read.entity.ReadableEntity;
 import ec.gob.seps.query.criteria.select.Select;
@@ -60,33 +61,28 @@ public final class SelectEntity implements Select {
 			for (final AttributeJoin<?> fieldObjectJoin : fieldsWithObject) {
 				
 				EntityType<?> entityTypeJoin = null;
-				T joinEntity = null;
+				T entityJoin = null;
+				From<?, ?> join = null;
 				
 				if (fieldObjectJoin.getAttribute() instanceof AttributeOneValue){
+					
+					join = FetchEntityLazy.join(from).getFrom((AttributeJoin<AttributeOneValue>) fieldObjectJoin);
 					
 					final AttributeOneValue attributeOneValue = (AttributeOneValue) fieldObjectJoin.getAttribute();
 					
 					if (attributeOneValue.getValue() instanceof Collection) {
 						
 						final Collection<?> collection = (Collection<?>) attributeOneValue.getValue();
-						final From<?, ?> join = FetchEntityLazy.join(from).getFrom((AttributeJoin<AttributeOneValue>) fieldObjectJoin);
 						
 						if (CollectionUtils.isNotEmpty(collection)) {
-							joinEntity = (T) collection.iterator().next();
-							entityTypeJoin = this.metamodel.entity(joinEntity.getClass());
+							entityTypeJoin = buildEntityType(collection.iterator().next());
 						}
 						
-						builderWhere.addCondicion(this.getWhere(joinEntity, join, entityTypeJoin));
-						
 					} else {
-						
-						joinEntity = (T) attributeOneValue.getValue();
-						entityTypeJoin = this.metamodel.entity(joinEntity.getClass());
-						
-						final From<?, ?> join = FetchEntityLazy.join(from).getFrom((AttributeJoin<AttributeOneValue>) fieldObjectJoin);
-						builderWhere.addCondicion(this.getWhere(joinEntity, join, entityTypeJoin));
-						
+						entityTypeJoin = buildEntityType(attributeOneValue.getValue());
 					}
+					
+					builderWhere.addCondicion(this.getWhere(entityJoin, join, entityTypeJoin));
 					
 				}
 			}
@@ -94,6 +90,11 @@ public final class SelectEntity implements Select {
 		}
 		
 		return builderWhere;
+	}
+	
+	
+	private EntityType<?> buildEntityType(Object entity){
+		return this.metamodel.entity(entity.getClass());
 	}
 	
 }
