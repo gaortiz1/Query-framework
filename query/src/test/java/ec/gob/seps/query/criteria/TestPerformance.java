@@ -48,7 +48,7 @@ public class TestPerformance extends AbstractTestCriteria{
 			InformeHallazgoDetalle informeHallazgoDetalle = new InformeHallazgoDetalle();
 			informeHallazgoDetalle.setCodInformeHallazgoDetalle(1l);
 			informeHallazgoDetalle.setCodArea(new Catalogo());
-			informeHallazgoDetalle.getCodArea().setNomCatalogo("a");
+			informeHallazgoDetalle.getCodArea().setNombre("a");
 			subcomponente.getHalInformesHallazgoDetalleList().add(informeHallazgoDetalle);
 			
 			informeHallazgoDetalle.setHalHallazgosRecomendacionList(new HashSet<Recomendacion>());		
